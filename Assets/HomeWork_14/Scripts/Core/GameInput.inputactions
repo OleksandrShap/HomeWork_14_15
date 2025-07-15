@@ -1,0 +1,138 @@
+{
+    "name": "GameInput",
+    "maps": [
+        {
+            "name": "PlayerMap",
+            "id": "f01dbda9-b059-4085-8bd9-e1a1fa6fc91a",
+            "actions": [
+                {
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "1ff94764-8a8b-499d-9f3e-5a3c4e084cd9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Hold,Hold",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Walk",
+                    "type": "PassThrough",
+                    "id": "e32586c4-ed34-4e56-9364-9cb2c1b43416",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Look",
+                    "type": "PassThrough",
+                    "id": "d3c85130-2909-493d-8b71-28fdd32bbea4",
+                    "expectedControlType": "Delta",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Sprint",
+                    "type": "PassThrough",
+                    "id": "ebbbf440-ca38-4fae-a5b3-98761a8e35a4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ff1097c4-b892-458a-bb59-4a6bb7191ea2",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "2D Vector",
+                    "id": "a29f7012-259c-48a2-987b-7660fb0a7727",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Walk",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "6ec449ef-a412-416d-becb-3a9e7e1f2250",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Walk",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "24610c77-2e99-4d3e-a7d1-09ca29e91877",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Walk",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "2a5b97b8-a7b6-4650-a9d4-5218221dab26",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Walk",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "5f36fd78-6101-4c29-9ee3-173f30fa7939",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Walk",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "2897f0ed-7906-4e1f-b295-464b9f47ec3c",
+                    "path": "<Pointer>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "84dca2d9-3627-46ab-ad79-07886d94acf4",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
