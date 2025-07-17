@@ -26,8 +26,12 @@ public class Player : MonoBehaviour
 
     private Camera _mainCamera;
     private float _cameraPitch;
+    
     private Vector2 _moveInput;
     private bool _isSprint;
+
+    private bool _wasGrounded = true;
+    private float _lastFallVelocity;
 
     private void Awake()
     {
@@ -59,9 +63,52 @@ public class Player : MonoBehaviour
         var move = relativeDirection.normalized * moveSpeed * Time.deltaTime;
 
         if(Physics.Raycast(_player.position + Vector3.up * _playerHeight * 0.4f, move.normalized, 0.6f))
+        {
             move = Vector3.zero;
+        }
 
         _player.linearVelocity = new Vector3(move.x, _player.linearVelocity.y, move.z);
+
+
+        bool isGrounded = Physics.Raycast(_player.transform.position, Vector3.down, 0.2f);
+
+        if (!isGrounded)
+        {
+            _lastFallVelocity = -_player.linearVelocity.y;
+        }
+
+        if (!_wasGrounded && isGrounded)
+        {
+
+            _landingParticles.Play();
+            float fallVelocity = _lastFallVelocity;
+
+            Debug.Log(fallVelocity);
+
+            if (fallVelocity >= 1f && _landingParticles != null)
+            {
+                float t = Mathf.InverseLerp(2.5f, 20f, fallVelocity);
+
+                var emission = _landingParticles.emission;
+                var burst = emission.GetBurst(0);
+
+                burst.count = Mathf.Lerp(25f, 100f, t);
+                emission.SetBurst(0, burst);
+
+                var main = _landingParticles.main;
+                main.startSize = new ParticleSystem.MinMaxCurve(
+                    Mathf.Lerp(0.02f, 0.15f, t),
+                    Mathf.Lerp(0.02f, 0.25f, t)
+                );
+
+                main.startSpeed = Mathf.Lerp(3.5f, 8f, t);
+
+                _landingParticles.Play();
+            }
+        }
+
+        _wasGrounded = isGrounded;
+
     }
 
     private void OnSprint(InputAction.CallbackContext context)
@@ -85,8 +132,7 @@ public class Player : MonoBehaviour
 
     private void OnJump(InputAction.CallbackContext context)
     {
-        //if(Physics.Raycast(_player.transform.position, Vector3.down, _grondCheckDistance))
-        if(_player.linearVelocity.y == 0)
+        if(Physics.Raycast(_player.transform.position, Vector3.down, _grondCheckDistance))
         {
             _player.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);
         }

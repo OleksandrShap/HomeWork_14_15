@@ -97,7 +97,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""id"": ""1ff94764-8a8b-499d-9f3e-5a3c4e084cd9"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""Hold,Hold"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
