@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
         var absoluteDirection = new Vector3(_moveInput.x, 0f, _moveInput.y);
         var relativeDirection = _mainCamera.transform.TransformDirection(absoluteDirection);
         var moveSpeed = _isSprint ? _sprintSpeed : _moveSpeed;
-        var move = relativeDirection.normalized * moveSpeed * Time.deltaTime;
+        var move = relativeDirection.normalized * moveSpeed;
 
         if(Physics.Raycast(_player.position + Vector3.up * _playerHeight * 0.4f, move.normalized, 0.6f))
         {
@@ -69,6 +69,11 @@ public class Player : MonoBehaviour
 
         _player.linearVelocity = new Vector3(move.x, _player.linearVelocity.y, move.z);
 
+        PlayParticleSystem();
+    }
+
+    private void PlayParticleSystem()
+    {
 
         bool isGrounded = Physics.Raycast(_player.transform.position, Vector3.down, 0.2f);
 
@@ -108,7 +113,6 @@ public class Player : MonoBehaviour
         }
 
         _wasGrounded = isGrounded;
-
     }
 
     private void OnSprint(InputAction.CallbackContext context)
@@ -152,6 +156,5 @@ public class Player : MonoBehaviour
     {
         _gameInput.Disable();
     }
-
    
 }
