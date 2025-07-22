@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
 {
     [Header("General")]
     [SerializeField] private Rigidbody _player;
+    [SerializeField] private Weapon _weapon;
+    [SerializeField] private Transform _direction;
     [SerializeField] private float _playerHeight = 1.6f;
     [Header("Look")]
     [SerializeField] private float _sensitivity = 15f;
@@ -42,6 +44,7 @@ public class Player : MonoBehaviour
         _actions.Jump.performed += OnJump;
         _actions.Look.performed += OnLook;
         _actions.Sprint.performed += OnSprint;
+        _actions.Shoot.started += OnShoot;
 
         _mainCamera = Camera.main;
 
@@ -54,15 +57,19 @@ public class Player : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
     }
-
+       
     private void FixedUpdate()
     {
         var absoluteDirection = new Vector3(_moveInput.x, 0f, _moveInput.y);
         var relativeDirection = _mainCamera.transform.TransformDirection(absoluteDirection);
+               
         var moveSpeed = _isSprint ? _sprintSpeed : _moveSpeed;
         var move = relativeDirection.normalized * moveSpeed;
 
-        if(Physics.Raycast(_player.position + Vector3.up * _playerHeight * 0.4f, move.normalized, 0.6f))
+        _weapon.transform.rotation = Quaternion.LookRotation(Camera.main.transform.forward);
+                   
+
+        if (Physics.Raycast(_player.position + Vector3.up * _playerHeight * 0.4f, move.normalized, 0.6f))
         {
             move = Vector3.zero;
         }
@@ -71,6 +78,7 @@ public class Player : MonoBehaviour
 
         PlayParticleSystem();
     }
+    
 
     private void PlayParticleSystem()
     {
@@ -88,7 +96,7 @@ public class Player : MonoBehaviour
             _landingParticles.Play();
             float fallVelocity = _lastFallVelocity;
 
-            Debug.Log(fallVelocity);
+            //Debug.Log(fallVelocity);
 
             if (fallVelocity >= 1f && _landingParticles != null)
             {
@@ -113,6 +121,11 @@ public class Player : MonoBehaviour
         }
 
         _wasGrounded = isGrounded;
+    }
+
+    private void OnShoot(InputAction.CallbackContext context)
+    {
+        _weapon.Shoot();
     }
 
     private void OnSprint(InputAction.CallbackContext context)
